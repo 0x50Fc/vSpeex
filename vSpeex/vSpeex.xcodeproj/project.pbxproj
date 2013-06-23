@@ -1,0 +1,395 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACC949291777201800F4736B /* InfoPlist.strings */; };
+		ACC9494D1777212700F4736B /* vSpeex.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9494C1777212700F4736B /* vSpeex.m */; };
+		ACC9494F17772CA700F4736B /* vSpeex.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9494B1777212700F4736B /* vSpeex.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACC9495217773C3D00F4736B /* vSpeexOggWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */; };
+		ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC94954177744F700F4736B /* vSpeexOggReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACC94957177744F800F4736B /* vSpeexOggReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC94955177744F700F4736B /* vSpeexOggReader.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		ACC9491117771FE200F4736B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		ACC949231777201800F4736B /* vSpeex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vSpeex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACC949241777201800F4736B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		ACC949281777201800F4736B /* vSpeex-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "vSpeex-Info.plist"; sourceTree = "<group>"; };
+		ACC9492A1777201800F4736B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		ACC9492C1777201800F4736B /* vSpeex-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "vSpeex-Prefix.pch"; sourceTree = "<group>"; };
+		ACC94935177720DC00F4736B /* config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config_types.h; sourceTree = "<group>"; };
+		ACC94936177720DC00F4736B /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ogg.h; sourceTree = "<group>"; };
+		ACC94937177720DC00F4736B /* os_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = os_types.h; sourceTree = "<group>"; };
+		ACC94939177720DC00F4736B /* speex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex.h; sourceTree = "<group>"; };
+		ACC9493A177720DC00F4736B /* speex_bits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_bits.h; sourceTree = "<group>"; };
+		ACC9493B177720DC00F4736B /* speex_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_buffer.h; sourceTree = "<group>"; };
+		ACC9493C177720DC00F4736B /* speex_callbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_callbacks.h; sourceTree = "<group>"; };
+		ACC9493D177720DC00F4736B /* speex_config_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_config_types.h; sourceTree = "<group>"; };
+		ACC9493E177720DC00F4736B /* speex_echo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_echo.h; sourceTree = "<group>"; };
+		ACC9493F177720DC00F4736B /* speex_header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_header.h; sourceTree = "<group>"; };
+		ACC94940177720DC00F4736B /* speex_jitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_jitter.h; sourceTree = "<group>"; };
+		ACC94941177720DC00F4736B /* speex_preprocess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_preprocess.h; sourceTree = "<group>"; };
+		ACC94942177720DC00F4736B /* speex_resampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_resampler.h; sourceTree = "<group>"; };
+		ACC94943177720DC00F4736B /* speex_stereo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_stereo.h; sourceTree = "<group>"; };
+		ACC94944177720DC00F4736B /* speex_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speex_types.h; sourceTree = "<group>"; };
+		ACC94945177720DC00F4736B /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libogg.a; sourceTree = "<group>"; };
+		ACC94946177720DC00F4736B /* libspeex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libspeex.a; sourceTree = "<group>"; };
+		ACC94947177720DC00F4736B /* libspeexdsp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libspeexdsp.a; sourceTree = "<group>"; };
+		ACC9494B1777212700F4736B /* vSpeex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeex.h; sourceTree = "<group>"; };
+		ACC9494C1777212700F4736B /* vSpeex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeex.m; sourceTree = "<group>"; };
+		ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexOggWriter.h; sourceTree = "<group>"; };
+		ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexOggWriter.m; sourceTree = "<group>"; };
+		ACC94954177744F700F4736B /* vSpeexOggReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexOggReader.h; sourceTree = "<group>"; };
+		ACC94955177744F700F4736B /* vSpeexOggReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexOggReader.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ACC949201777201800F4736B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ACC9490517771FE200F4736B = {
+			isa = PBXGroup;
+			children = (
+				ACC94932177720DC00F4736B /* lib */,
+				ACC949261777201800F4736B /* vSpeex */,
+				ACC9491017771FE200F4736B /* Frameworks */,
+				ACC9490F17771FE200F4736B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ACC9490F17771FE200F4736B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ACC949231777201800F4736B /* vSpeex.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ACC9491017771FE200F4736B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ACC9491117771FE200F4736B /* Foundation.framework */,
+				ACC949241777201800F4736B /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ACC949261777201800F4736B /* vSpeex */ = {
+			isa = PBXGroup;
+			children = (
+				ACC949271777201800F4736B /* Supporting Files */,
+				ACC9494B1777212700F4736B /* vSpeex.h */,
+				ACC9494C1777212700F4736B /* vSpeex.m */,
+				ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */,
+				ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */,
+				ACC94954177744F700F4736B /* vSpeexOggReader.h */,
+				ACC94955177744F700F4736B /* vSpeexOggReader.m */,
+			);
+			path = vSpeex;
+			sourceTree = "<group>";
+		};
+		ACC949271777201800F4736B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ACC949281777201800F4736B /* vSpeex-Info.plist */,
+				ACC949291777201800F4736B /* InfoPlist.strings */,
+				ACC9492C1777201800F4736B /* vSpeex-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ACC94932177720DC00F4736B /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				ACC94933177720DC00F4736B /* include */,
+				ACC94945177720DC00F4736B /* libogg.a */,
+				ACC94946177720DC00F4736B /* libspeex.a */,
+				ACC94947177720DC00F4736B /* libspeexdsp.a */,
+			);
+			name = lib;
+			path = ../lib;
+			sourceTree = "<group>";
+		};
+		ACC94933177720DC00F4736B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ACC94934177720DC00F4736B /* ogg */,
+				ACC94938177720DC00F4736B /* speex */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		ACC94934177720DC00F4736B /* ogg */ = {
+			isa = PBXGroup;
+			children = (
+				ACC94935177720DC00F4736B /* config_types.h */,
+				ACC94936177720DC00F4736B /* ogg.h */,
+				ACC94937177720DC00F4736B /* os_types.h */,
+			);
+			path = ogg;
+			sourceTree = "<group>";
+		};
+		ACC94938177720DC00F4736B /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				ACC94939177720DC00F4736B /* speex.h */,
+				ACC9493A177720DC00F4736B /* speex_bits.h */,
+				ACC9493B177720DC00F4736B /* speex_buffer.h */,
+				ACC9493C177720DC00F4736B /* speex_callbacks.h */,
+				ACC9493D177720DC00F4736B /* speex_config_types.h */,
+				ACC9493E177720DC00F4736B /* speex_echo.h */,
+				ACC9493F177720DC00F4736B /* speex_header.h */,
+				ACC94940177720DC00F4736B /* speex_jitter.h */,
+				ACC94941177720DC00F4736B /* speex_preprocess.h */,
+				ACC94942177720DC00F4736B /* speex_resampler.h */,
+				ACC94943177720DC00F4736B /* speex_stereo.h */,
+				ACC94944177720DC00F4736B /* speex_types.h */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		ACC9494E17772CA400F4736B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACC9494F17772CA700F4736B /* vSpeex.h in Headers */,
+				ACC9495217773C3D00F4736B /* vSpeexOggWriter.h in Headers */,
+				ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		ACC949221777201800F4736B /* vSpeex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACC9492D1777201800F4736B /* Build configuration list for PBXNativeTarget "vSpeex" */;
+			buildPhases = (
+				ACC9491F1777201800F4736B /* Sources */,
+				ACC949201777201800F4736B /* Frameworks */,
+				ACC949211777201800F4736B /* Resources */,
+				ACC9494E17772CA400F4736B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = vSpeex;
+			productName = vSpeex;
+			productReference = ACC949231777201800F4736B /* vSpeex.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ACC9490617771FE200F4736B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = hailong.org;
+			};
+			buildConfigurationList = ACC9490917771FE200F4736B /* Build configuration list for PBXProject "vSpeex" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ACC9490517771FE200F4736B;
+			productRefGroup = ACC9490F17771FE200F4736B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACC949221777201800F4736B /* vSpeex */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ACC949211777201800F4736B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACC9491F1777201800F4736B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACC9494D1777212700F4736B /* vSpeex.m in Sources */,
+				ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */,
+				ACC94957177744F800F4736B /* vSpeexOggReader.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ACC949291777201800F4736B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACC9492A1777201800F4736B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ACC9491A17771FE200F4736B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ACC9491B17771FE200F4736B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ACC9492E1777201800F4736B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "vSpeex/vSpeex-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = ../lib/include;
+				INFOPLIST_FILE = "vSpeex/vSpeex-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib\"",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-Objc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		ACC9492F1777201800F4736B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "vSpeex/vSpeex-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = ../lib/include;
+				INFOPLIST_FILE = "vSpeex/vSpeex-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib\"",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-Objc";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACC9490917771FE200F4736B /* Build configuration list for PBXProject "vSpeex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACC9491A17771FE200F4736B /* Debug */,
+				ACC9491B17771FE200F4736B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACC9492D1777201800F4736B /* Build configuration list for PBXNativeTarget "vSpeex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACC9492E1777201800F4736B /* Debug */,
+				ACC9492F1777201800F4736B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ACC9490617771FE200F4736B /* Project object */;
+}
