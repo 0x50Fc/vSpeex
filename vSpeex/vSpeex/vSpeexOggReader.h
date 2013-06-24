@@ -16,9 +16,9 @@
 @property(nonatomic,readonly) vSpeex * speex;
 @property(nonatomic,readonly, getter = isClosed) BOOL closed;
 
--(id) initWithFilePath:(NSString *) filePath speex:(vSpeex *) speex;
+-(id) initWithFilePath:(NSString *) filePath;
 
--(void *) writeFrame:(void *) frameBytes echoBytes:(void *) echoBytes;
+-(void *) readFrame;
 
 -(BOOL) close;
 

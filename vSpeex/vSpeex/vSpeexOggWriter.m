@@ -17,11 +17,9 @@
     FILE * _file;
     ogg_int64_t _packetno;
     ogg_stream_state _os;
-    struct {
-        SpeexHeader header;
-        void * data;
-        int bytes;
-    } _header;
+    SpeexHeader _header;
+    void * _headerData;
+    int _headerBytes;
     void * _ebuf;
 }
 
@@ -32,16 +30,14 @@
 @synthesize speex = _speex;
 @synthesize closed = _closed;
 
-
 -(void) dealloc{
-    if(_header.data){
-        speex_header_free(_header.data);
-    }
     if(_ebuf){
         free(_ebuf);
     }
+    if(_headerData){
+        speex_header_free(_headerData);
+    }
     ogg_stream_clear(&_os);
-    ogg_stream_destroy(&_os);
     [_speex release];
     [super dealloc];
 }
@@ -60,7 +56,7 @@
             [self autorelease];
             return nil;
         }
-        
+
         _speex = [speex retain];
     
         const struct SpeexMode * m = & speex_nb_mode;
@@ -80,15 +76,23 @@
         
         ogg_stream_init(& _os, rand());
         
-        speex_init_header(&_header.header, speex.samplingRate, 1, m);
+        speex_init_header(&_header, speex.samplingRate, 1, m);
         
-        _header.data = speex_header_to_packet(&_header.header, &_header.bytes);
+        _header.vbr = 0;
+        _header.bitrate = 16;
+        _header.frame_size = _speex.frameSize;
+        _header.frames_per_packet = 1;
         
+        _headerData = speex_header_to_packet(&_header, &_headerBytes);
     }
     return self;
 }
 
 -(BOOL) writeFrame:(void *) frameBytes echoBytes:(void *) echoBytes{
+    
+    if(_closed){
+        return NO;
+    }
     
     int length = [_speex frameBytes];
     
@@ -99,20 +103,18 @@
     if((length = [_speex encodeFrame:frameBytes encodeBytes:_ebuf echoBytes:echoBytes]) > 0){
     
         ogg_packet op;
+        ogg_page page;
+        int rs = 0;
         
-        op.packet = _header.data;
-        op.bytes = _header.bytes;
-        op.b_o_s = 1;
+        op.packet = _headerData;
+        op.bytes = _headerBytes;
+        op.b_o_s = 0;
         op.e_o_s = 0;
         op.granulepos = 0;
         op.packetno = _packetno++;
         
         ogg_stream_reset(& _os);
         ogg_stream_packetin(&_os, &op);
-        
-        ogg_page page;
-        
-        int rs = 0;
         
         while(1){
             rs = ogg_stream_flush(& _os, &page);
@@ -151,6 +153,8 @@
         
         fwrite(page.header, 1, page.header_len, _file);
         fwrite(page.body, 1, page.body_len, _file);
+        
+        fflush(_file);
 
         return YES;
     }
@@ -186,10 +190,12 @@
         }
     
         if(_file){
+            
             if(rs == 0){
                 fwrite(page.header, 1, page.header_len, _file);
                 fwrite(page.body, 1, page.body_len, _file);
             }
+            
             fclose(_file);
             _file = NULL;
         }
@@ -198,6 +204,12 @@
     }
     
     return YES;
+}
+
+-(void) flush{
+    if(_file){
+        fflush(_file);
+    }
 }
 
 @end

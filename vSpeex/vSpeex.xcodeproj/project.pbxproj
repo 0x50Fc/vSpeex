@@ -7,16 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		111732AB1777DDA000589C28 /* vSpeexRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = 111732A91777DDA000589C28 /* vSpeexRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		111732AC1777DDA000589C28 /* vSpeexRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 111732AA1777DDA000589C28 /* vSpeexRecorder.m */; };
+		111732B71777F0C900589C28 /* vSpeexOggReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC94955177744F700F4736B /* vSpeexOggReader.m */; };
+		111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 111732C31777FB0400589C28 /* vSpeexPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111732C41777FB0400589C28 /* vSpeexPlayer.m */; };
 		ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACC949291777201800F4736B /* InfoPlist.strings */; };
 		ACC9494D1777212700F4736B /* vSpeex.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9494C1777212700F4736B /* vSpeex.m */; };
 		ACC9494F17772CA700F4736B /* vSpeex.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9494B1777212700F4736B /* vSpeex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC9495217773C3D00F4736B /* vSpeexOggWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */; };
 		ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC94954177744F700F4736B /* vSpeexOggReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ACC94957177744F800F4736B /* vSpeexOggReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC94955177744F700F4736B /* vSpeexOggReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		111732A91777DDA000589C28 /* vSpeexRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexRecorder.h; sourceTree = "<group>"; };
+		111732AA1777DDA000589C28 /* vSpeexRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexRecorder.m; sourceTree = "<group>"; };
+		111732C31777FB0400589C28 /* vSpeexPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexPlayer.h; sourceTree = "<group>"; };
+		111732C41777FB0400589C28 /* vSpeexPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexPlayer.m; sourceTree = "<group>"; };
 		ACC9491117771FE200F4736B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ACC949231777201800F4736B /* vSpeex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vSpeex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC949241777201800F4736B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -97,6 +105,10 @@
 				ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */,
 				ACC94954177744F700F4736B /* vSpeexOggReader.h */,
 				ACC94955177744F700F4736B /* vSpeexOggReader.m */,
+				111732A91777DDA000589C28 /* vSpeexRecorder.h */,
+				111732AA1777DDA000589C28 /* vSpeexRecorder.m */,
+				111732C31777FB0400589C28 /* vSpeexPlayer.h */,
+				111732C41777FB0400589C28 /* vSpeexPlayer.m */,
 			);
 			path = vSpeex;
 			sourceTree = "<group>";
@@ -171,6 +183,8 @@
 				ACC9494F17772CA700F4736B /* vSpeex.h in Headers */,
 				ACC9495217773C3D00F4736B /* vSpeexOggWriter.h in Headers */,
 				ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */,
+				111732AB1777DDA000589C28 /* vSpeexRecorder.h in Headers */,
+				111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +253,9 @@
 			files = (
 				ACC9494D1777212700F4736B /* vSpeex.m in Sources */,
 				ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */,
-				ACC94957177744F800F4736B /* vSpeexOggReader.m in Sources */,
+				111732AC1777DDA000589C28 /* vSpeexRecorder.m in Sources */,
+				111732B71777F0C900589C28 /* vSpeexOggReader.m in Sources */,
+				111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

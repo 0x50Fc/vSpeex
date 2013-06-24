@@ -33,7 +33,9 @@
 
 -(id) initWithMode:(vSpeexMode) mode{
     if((self = [super init])){
-        _quality = 5;
+        
+        _quality = 8;
+        _mode = mode;
         
         switch (mode) {
             case vSpeexModeNB:
@@ -56,6 +58,7 @@
         
         speex_bits_init(& _bits);
         
+        
         int b = 1;
         
         speex_encoder_ctl(_encodeState,SPEEX_GET_FRAME_SIZE,&_frameSize);
@@ -67,8 +70,10 @@
         speex_decoder_ctl(_decodeState,SPEEX_SET_ENH,&b);
         
         _preprocessState = speex_preprocess_state_init(_frameSize,_samplingRate);
+        
         speex_preprocess_ctl(_preprocessState, SPEEX_PREPROCESS_SET_DENOISE, &b);
-        _encodeState = speex_echo_state_init(_frameSize, 50 );
+        
+        _echoState = speex_echo_state_init(_frameSize, 50 );
         
         _frameBytes = _frameSize * sizeof(spx_int16_t);
         
@@ -138,7 +143,7 @@
     rs = speex_decode_int(_decodeState, &_bits, frameBytes);
     speex_preprocess_run(_preprocessState, frameBytes);
     
-    return rs;
+    return rs ==0 ? _frameBytes : 0;
 
 }
 
