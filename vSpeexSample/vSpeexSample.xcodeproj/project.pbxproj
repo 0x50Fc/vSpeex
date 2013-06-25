@@ -61,9 +61,9 @@
 		111732971777DD1300589C28 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSViewController.xib; sourceTree = "<group>"; };
 		1117329E1777DD3400589C28 /* vSpeex.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = vSpeex.xcodeproj; path = ../vSpeex/vSpeex.xcodeproj; sourceTree = "<group>"; };
 		111732A71777DD5300589C28 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		111732AD1777E1F700589C28 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libogg.a; path = ../lib/libogg.a; sourceTree = "<group>"; };
-		111732AE1777E1F700589C28 /* libspeex.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libspeex.a; path = ../lib/libspeex.a; sourceTree = "<group>"; };
-		111732AF1777E1F700589C28 /* libspeexdsp.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libspeexdsp.a; path = ../lib/libspeexdsp.a; sourceTree = "<group>"; };
+		111732AD1777E1F700589C28 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../lib/libogg.a; sourceTree = "<group>"; };
+		111732AE1777E1F700589C28 /* libspeex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspeex.a; path = ../lib/libspeex.a; sourceTree = "<group>"; };
+		111732AF1777E1F700589C28 /* libspeexdsp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspeexdsp.a; path = ../lib/libspeexdsp.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +385,7 @@
 				1117329D1777DD1300589C28 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
