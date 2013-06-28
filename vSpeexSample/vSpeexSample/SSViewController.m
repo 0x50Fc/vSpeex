@@ -65,7 +65,7 @@
         [sender setSelected:NO];
     }
     else{
-        self.recorder = [[vSpeexRecorder alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"] speex:[[vSpeex alloc] initWithMode:vSpeexModeUWB]];
+        self.recorder = [[vSpeexRecorder alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"] speex:[[vSpeex alloc] initWithMode:vSpeexModeWB]];
         
         [_operationQueue addOperation:_recorder];
         
