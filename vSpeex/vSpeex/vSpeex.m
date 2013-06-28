@@ -34,7 +34,7 @@
 -(id) initWithMode:(vSpeexMode) mode{
     if((self = [super init])){
         
-        _quality = 8;
+        _quality = 10;
         _mode = mode;
         
         switch (mode) {
@@ -124,7 +124,7 @@
         enc = _ebuf;
     }
     
-    if(speex_preprocess_run(_preprocessState, enc))
+    //if(speex_preprocess_run(_preprocessState, enc))
     {
         speex_bits_reset(&_bits);
         speex_encode_int(_encodeState, enc, &_bits);
@@ -141,7 +141,7 @@
     speex_bits_reset(&_bits);
     speex_bits_read_from(&_bits, encodeBytes, length);
     rs = speex_decode_int(_decodeState, &_bits, frameBytes);
-    speex_preprocess_run(_preprocessState, frameBytes);
+    //speex_preprocess_run(_preprocessState, frameBytes);
     
     return rs ==0 ? _frameBytes : 0;
 
