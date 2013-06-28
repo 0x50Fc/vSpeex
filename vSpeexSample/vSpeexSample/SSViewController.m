@@ -15,10 +15,22 @@
 
 @property(nonatomic,retain) vSpeexRecorder * recorder;
 @property(nonatomic,retain) vSpeexPlayer * player;
+@property(nonatomic,retain) NSOperationQueue * operationQueue;
 
 @end
 
 @implementation SSViewController
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    if((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])){
+        
+        _operationQueue = [[NSOperationQueue alloc] init];
+        
+        [_operationQueue setMaxConcurrentOperationCount:2];
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -26,8 +38,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.recorder = [[vSpeexRecorder alloc] init];
-    self.player = [[vSpeexPlayer alloc] init];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,22 +48,27 @@
 
 - (IBAction)playAction:(id)sender {
     if([sender isSelected]){
-        [_player stop];
+        [_player cancel];
         [sender setSelected:NO];
     }
     else{
-        [_player start:[NSRunLoop currentRunLoop] fromFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"]];
+        self.player = [[vSpeexPlayer alloc] initWithFilePath:
+                       [NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"]];
+        [_operationQueue addOperation:_player];
         [sender setSelected:YES];
     }
 }
 
 - (IBAction)doAction:(id)sender {
     if([sender isSelected]){
-        [_recorder stop];
+        [_recorder cancel];
         [sender setSelected:NO];
     }
     else{
-        [_recorder start:[NSRunLoop currentRunLoop] toFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"] speex:[[vSpeex alloc] initWithMode:vSpeexModeWB]];
+        self.recorder = [[vSpeexRecorder alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"] speex:[[vSpeex alloc] initWithMode:vSpeexModeWB]];
+        
+        [_operationQueue addOperation:_recorder];
+        
         [sender setSelected:YES];
     }
 }

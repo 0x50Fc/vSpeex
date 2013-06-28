@@ -19,6 +19,9 @@
     AudioQueueBufferRef _buffers[AUDIO_RECORD_BUFFER_SIZE];
     AudioStreamBasicDescription format;
     int _bufferSize;
+    
+    BOOL _finished;
+    BOOL _executing;
 }
 
 @property(nonatomic,retain) vSpeexOggWriter * writer;
@@ -46,36 +49,69 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 @implementation vSpeexRecorder
 
 @synthesize writer = _writer;
-@synthesize started = _started;
 
 -(void) dealloc{
-    [self stop];
+    [_writer close];
     [_writer release];
     [super dealloc];
 }
 
--(void) start:(NSRunLoop *) runloop toFilePath:(NSString *) filePath{
-    [self start:runloop toFilePath:filePath speex:[[[vSpeex alloc] initWithMode:vSpeexModeNB] autorelease]];
+-(id) initWithFilePath:(NSString *) filePath speex:(vSpeex *) speex{
+    if((self = [super init])){
+        _writer = [[vSpeexOggWriter alloc] initWithFilePath:filePath speex:speex];
+        if(_writer == nil){
+            [self autorelease];
+            return nil;
+        }
+    }
+    return self;
 }
 
--(void) start:(NSRunLoop *) runloop toFilePath:(NSString *) filePath speex:(vSpeex *) speex{
-    if(!_started){
+
+
+-(BOOL) isReady{
+    return _writer != nil;
+}
+
+-(BOOL) isConcurrent{
+    return YES;
+}
+
+-(BOOL) isExecuting{
+    return _executing;
+}
+
+-(BOOL) isFinished{
+    return _finished;
+}
+
+-(void) cancel{
+    [super cancel];
+    _finished = YES;
+}
+
+-(void) main{
+    
+    _executing = YES;
+    
+    @autoreleasepool {
         
-        self.writer = [[[vSpeexOggWriter alloc] initWithFilePath:filePath speex:speex] autorelease];
+        NSRunLoop * runloop = [NSRunLoop currentRunLoop];
         
-        _bufferSize = _writer.speex.frameBytes;
+
+        _bufferSize = [_writer.speex frameBytes];
         
         format.mFormatID = kAudioFormatLinearPCM;
-		format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
-		format.mChannelsPerFrame = 1;
-		format.mBitsPerChannel = 16;
-		format.mFramesPerPacket = 1;
-		format.mBytesPerPacket =  2;
-		format.mBytesPerFrame = 2;
-		format.mSampleRate = _writer.speex.samplingRate;
+        format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
+        format.mChannelsPerFrame = 1;
+        format.mBitsPerChannel = 16;
+        format.mFramesPerPacket = 1;
+        format.mBytesPerPacket =  2;
+        format.mBytesPerFrame = 2;
+        format.mSampleRate = _writer.speex.samplingRate;
         
         OSStatus status;
-        
+      
         status = AudioQueueNewInput(&format, vSpeexRecorder_AudioQueueInputCallback, _writer, [runloop getCFRunLoop], kCFRunLoopCommonModes, 0, &_queue);
         
         for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
@@ -83,29 +119,31 @@ static void vSpeexRecorder_AudioQueueInputCallback(
             status = AudioQueueEnqueueBuffer(_queue, _buffers[i], 0, NULL);
         }
         
-        status = AudioQueueStart(_queue, NULL);
-
-        _started = YES;
-    }
-}
-
--(void) stop{
-    
-    if(_started){
+        AudioQueueFlush(_queue);
         
-		AudioQueueStop(_queue, YES);
+        AudioQueueSetParameter(_queue, kAudioQueueParam_Volume, 1.0);
+        
+        status = AudioQueueStart(_queue, NULL);
+        
+        while(![self isCancelled] && !_finished){
+            @autoreleasepool {
+                [runloop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.3]];
+            }
+        }
+        
+        AudioQueueStop(_queue, YES);
 		
 		for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
 			AudioQueueFreeBuffer(_queue,_buffers[i]);
 		}
-
+        
 		AudioQueueDispose(_queue, YES);
-        
-        _started = NO;
-        
+      
         [_writer close];
-        self.writer = nil;
+        
     }
+    
+    _executing = NO;
 }
 
 @end

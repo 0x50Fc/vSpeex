@@ -11,14 +11,8 @@
 
 #import <vSpeex/vSpeex.h>
 
-@interface vSpeexRecorder : NSObject
+@interface vSpeexRecorder : NSOperation
 
-@property(nonatomic,readonly,getter = isStarted) BOOL started;
-
--(void) start:(NSRunLoop *) runloop toFilePath:(NSString *) filePath;
-
--(void) start:(NSRunLoop *) runloop toFilePath:(NSString *) filePath speex:(vSpeex *) speex;
-
--(void) stop;
+-(id) initWithFilePath:(NSString *) filePath speex:(vSpeex *) speex;
 
 @end

@@ -10,8 +10,9 @@
 
 #import <vSpeex/vSpeex.h>
 
+#import <vSpeex/vSpeexReader.h>
 
-@interface vSpeexOggReader : NSObject
+@interface vSpeexOggReader : NSObject<vSpeexReader>
 
 @property(nonatomic,readonly) vSpeex * speex;
 @property(nonatomic,readonly, getter = isClosed) BOOL closed;

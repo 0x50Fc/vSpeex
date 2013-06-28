@@ -18,8 +18,6 @@
     ogg_int64_t _packetno;
     ogg_stream_state _os;
     SpeexHeader _header;
-    void * _headerData;
-    int _headerBytes;
     void * _ebuf;
 }
 
@@ -33,9 +31,6 @@
 -(void) dealloc{
     if(_ebuf){
         free(_ebuf);
-    }
-    if(_headerData){
-        speex_header_free(_headerData);
     }
     ogg_stream_clear(&_os);
     [_speex release];
@@ -81,9 +76,42 @@
         _header.vbr = 0;
         _header.bitrate = 16;
         _header.frame_size = _speex.frameSize;
-        _header.frames_per_packet = 1;
+        _header.frames_per_packet = 0;
         
-        _headerData = speex_header_to_packet(&_header, &_headerBytes);
+        int bytes = 0;
+        void * data = speex_header_to_packet(&_header, & bytes);
+        
+        ogg_packet op;
+        ogg_page page;
+        int rs = 0;
+        
+        op.packet = data;
+        op.bytes = bytes;
+        op.b_o_s = 0;
+        op.e_o_s = 0;
+        op.granulepos = 0;
+        op.packetno = _packetno++;
+        
+        ogg_stream_reset(& _os);
+        ogg_stream_packetin(&_os, &op);
+        
+        while(1){
+            rs = ogg_stream_flush(& _os, &page);
+            if(rs <= 0){
+                break;
+            }
+        }
+        
+        speex_header_free(data);
+        
+        if(rs != 0){
+            [self autorelease];
+            return nil;
+        }
+        
+        fwrite(page.header, 1, page.header_len, _file);
+        fwrite(page.body, 1, page.body_len, _file);
+        
     }
     return self;
 }
@@ -102,33 +130,10 @@
     
     if((length = [_speex encodeFrame:frameBytes encodeBytes:_ebuf echoBytes:echoBytes]) > 0){
     
+        
         ogg_packet op;
         ogg_page page;
         int rs = 0;
-        
-        op.packet = _headerData;
-        op.bytes = _headerBytes;
-        op.b_o_s = 0;
-        op.e_o_s = 0;
-        op.granulepos = 0;
-        op.packetno = _packetno++;
-        
-        ogg_stream_reset(& _os);
-        ogg_stream_packetin(&_os, &op);
-        
-        while(1){
-            rs = ogg_stream_flush(& _os, &page);
-            if(rs <= 0){
-                break;
-            }
-        }
-        
-        if(rs != 0){
-            return NO;
-        }
-        
-        fwrite(page.header, 1, page.header_len, _file);
-        fwrite(page.body, 1, page.body_len, _file);
         
         op.packet = _ebuf;
         op.bytes = length;

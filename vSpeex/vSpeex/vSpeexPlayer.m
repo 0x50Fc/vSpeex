@@ -16,6 +16,8 @@
     AudioQueueBufferRef _buffer;
     AudioStreamBasicDescription format;
     int _bufferSize;
+    BOOL _finished;
+    BOOL _executing;
 }
 
 @property(nonatomic,assign) int bufferSize;
@@ -39,26 +41,46 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
     }
     else{
-        [player performSelectorOnMainThread:@selector(stop) withObject:nil waitUntilDone:NO];
+        [player cancel];
     }
 }
 
 
 @implementation vSpeexPlayer
 
-@synthesize started = _started;
-
 -(void) dealloc{
-    [self stop];
     [_reader release];
     [super dealloc];
 }
 
--(void) start:(NSRunLoop *) runloop fromFilePath:(NSString *) filePath{
+-(BOOL) isReady{
+    return _reader != nil;
+}
+
+-(BOOL) isConcurrent{
+    return YES;
+}
+
+-(BOOL) isExecuting{
+    return _executing;
+}
+
+-(BOOL) isFinished{
+    return _finished;
+}
+
+-(void) cancel{
+    [super cancel];
+    _finished = YES;
+}
+
+-(void) main{
     
-    if(!_started){
+    _executing = YES;
+    
+    @autoreleasepool {
         
-        self.reader = [[[vSpeexOggReader alloc] initWithFilePath:filePath] autorelease];
+        NSRunLoop * runloop = [NSRunLoop currentRunLoop];
         
         void * data = [_reader readFrame];
         
@@ -77,7 +99,7 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
             
             OSStatus status;
             
-            status = AudioQueueNewOutput(&format, vSpeexPlayer_AudioQueueOutputCallback, self, [runloop getCFRunLoop], kCFRunLoopCommonModes, 0, &_queue);
+            status = AudioQueueNewOutput(&format, vSpeexPlayer_AudioQueueOutputCallback, self, CFRunLoopGetCurrent(), kCFRunLoopCommonModes, 0, &_queue);
             
             status = AudioQueueAllocateBuffer(_queue,_bufferSize,&_buffer);
             
@@ -89,26 +111,47 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
             
             status = AudioQueuePrime(_queue, 0, NULL);
             
+            AudioQueueSetParameter(_queue, kAudioQueueParam_Volume, 1.0);
+        
             status = AudioQueueStart(_queue, NULL);
             
-            _started = YES;
-
         }
-    }
-}
-
--(void) stop{
-    if(_started){
+        else{
+            _executing = NO;
+            _finished = YES;
+            return;
+        }
         
-		AudioQueueStop(_queue, YES);
+        while(![self isCancelled] && !_finished){
+            @autoreleasepool {
+                [runloop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.3]];
+            }
+        }
+        
+        AudioQueueStop(_queue, YES);
 		
 		AudioQueueFreeBuffer(_queue,_buffer);
 		
 		AudioQueueDispose(_queue, YES);
-		
-		_started = NO;
-	}
+        
+        
+        _buffer = NULL;
+        _queue = NULL;
+        
+    }
+    
+    _executing = NO;
 }
 
+-(id) initWithFilePath:(NSString *) filePath{
+    if((self = [super init])){
+        _reader = [[vSpeexOggReader alloc] initWithFilePath:filePath];
+        if(_reader == nil){
+            [self autorelease];
+            return nil;
+        }
+    }
+    return self;
+}
 
 @end

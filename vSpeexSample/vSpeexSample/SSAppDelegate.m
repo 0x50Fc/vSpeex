@@ -10,10 +10,19 @@
 
 #import "SSViewController.h"
 
+#import <AudioToolbox/AudioToolbox.h>
+
 @implementation SSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    AudioSessionInitialize(NULL, NULL, NULL, NULL);
+    
+    UInt32 category = kAudioSessionCategory_PlayAndRecord;
+    AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
+    
+    AudioSessionSetActive(true);
     
     NSLog(@"%@",NSHomeDirectory());
     

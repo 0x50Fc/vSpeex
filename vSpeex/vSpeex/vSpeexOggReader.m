@@ -24,7 +24,6 @@
     vSpeex * _speex;
     char * _ebuf;
     int _ret;
-    int _readh;
 }
 
 @end
@@ -46,7 +45,66 @@
         
         ogg_sync_init(&_oss);
 
-        _readh = 1;
+        ogg_page page;
+        ogg_packet op;
+        
+        while(1){
+            
+            if(_ret == 0){
+                _sbuf.length = fread(_sbuf.data, 1, sizeof(_sbuf.data), _file);
+                if(_sbuf.length ==0){
+                    [self autorelease];
+                    return nil;
+                }
+                char * data = ogg_sync_buffer(&_oss, _sbuf.length);
+                memcpy(data, _sbuf.data, _sbuf.length);
+                ogg_sync_wrote(&_oss, _sbuf.length);
+            }
+            
+            _ret = ogg_sync_pageout(&_oss, &page);
+            
+            if(_ret < 0){
+                [self autorelease];
+                return nil;
+            }
+            
+            if(_ret == 0){
+                continue;
+            }
+            
+            if(_os.serialno == 0){
+                ogg_stream_init(&_os, ogg_page_serialno(& page));
+            }
+            
+            ogg_stream_reset(&_os);
+            
+            ogg_stream_pagein(&_os, &page);
+            
+            _ret = ogg_stream_packetout(&_os, &op);
+            
+            if(_ret == 1){
+                
+                SpeexHeader * header = speex_packet_to_header((char *)op.packet, op.bytes);
+                
+                if(!header){
+                    [self autorelease];
+                    return nil;
+                }
+                
+                _speex = [[vSpeex alloc] initWithMode:header->mode];
+                [_speex setSamplingRate:header->rate];
+                
+                speex_header_free(header);
+                
+                break;
+                
+            }
+            else{
+                [self autorelease];
+                return nil;
+            }
+            
+        }
     }
     return self;
 }
@@ -61,7 +119,6 @@
     if(_ebuf){
         free(_ebuf);
     }
-    
     [super dealloc];
 }
 
@@ -93,15 +150,11 @@
         _ret = ogg_sync_pageout(&_oss, &page);
         
         if(_ret < 0){
-            return  NULL;
+            return NULL;
         }
         
         if(_ret == 0){
             continue;
-        }
-        
-        if(_os.serialno == 0){
-            ogg_stream_init(&_os, ogg_page_serialno(& page));
         }
         
         ogg_stream_reset(&_os);
@@ -112,39 +165,18 @@
         
         if(_ret == 1){
             
-            if(_readh){
-                
-                if(op.e_o_s != 0){
-                    return NULL;
-                }
-                
-                if(_speex == nil){
-                    SpeexHeader * header = speex_packet_to_header((char *)op.packet, op.bytes);
-                    if(!header){
-                        return NULL;
-                    }
-                    _speex = [[vSpeex alloc] initWithMode:header->mode];
-                    [_speex setSamplingRate:header->rate];
-                }
-                
-                _readh = 0;
+            if(op.e_o_s != 0){
+                return NULL;
             }
-            else {
-                
-                if(op.e_o_s != 0){
-                    return NULL;
-                }
-                
-                _readh = 1;
-                
-                if(_ebuf == NULL){
-                    _ebuf = malloc(_speex.frameBytes);
-                }
-                
-                [_speex decodeFrame:op.packet length:op.bytes frameBytes:_ebuf];
-                
-                return _ebuf;
+            
+            if(_ebuf == NULL){
+                _ebuf = malloc(_speex.frameBytes);
             }
+            
+            [_speex decodeFrame:op.packet length:op.bytes frameBytes:_ebuf];
+            
+            return _ebuf;
+        
         }
         else{
             return NULL;

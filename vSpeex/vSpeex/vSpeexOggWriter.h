@@ -10,7 +10,9 @@
 
 #import <vSpeex/vSpeex.h>
 
-@interface vSpeexOggWriter : NSObject
+#import <vSpeex/vSpeexWriter.h>
+
+@interface vSpeexOggWriter : NSObject<vSpeexWriter>
 
 @property(nonatomic,readonly) vSpeex * speex;
 @property(nonatomic,readonly, getter = isClosed) BOOL closed;

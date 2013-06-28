@@ -9,13 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
+@interface vSpeexPlayer : NSOperation
 
-@interface vSpeexPlayer : NSObject
-
-@property(nonatomic,readonly,getter = isStarted) BOOL started;
-
--(void) start:(NSRunLoop *) runloop fromFilePath:(NSString *) filePath;
-
--(void) stop;
+-(id) initWithFilePath:(NSString *) filePath;
 
 @end

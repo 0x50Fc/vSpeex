@@ -18,6 +18,8 @@
 		ACC9495217773C3D00F4736B /* vSpeexOggWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */; };
 		ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC94954177744F700F4736B /* vSpeexOggReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACDBAFA5177DEA260046331B /* vSpeexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFA3177DE9A00046331B /* vSpeexWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACDBAFA6177DEA260046331B /* vSpeexReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFA4177DE9BB0046331B /* vSpeexReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexOggWriter.m; sourceTree = "<group>"; };
 		ACC94954177744F700F4736B /* vSpeexOggReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexOggReader.h; sourceTree = "<group>"; };
 		ACC94955177744F700F4736B /* vSpeexOggReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexOggReader.m; sourceTree = "<group>"; };
+		ACDBAFA3177DE9A00046331B /* vSpeexWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vSpeexWriter.h; sourceTree = "<group>"; };
+		ACDBAFA4177DE9BB0046331B /* vSpeexReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vSpeexReader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				ACC949271777201800F4736B /* Supporting Files */,
 				ACC9494B1777212700F4736B /* vSpeex.h */,
 				ACC9494C1777212700F4736B /* vSpeex.m */,
+				ACDBAFA3177DE9A00046331B /* vSpeexWriter.h */,
+				ACDBAFA4177DE9BB0046331B /* vSpeexReader.h */,
 				ACC9495017773C3C00F4736B /* vSpeexOggWriter.h */,
 				ACC9495117773C3D00F4736B /* vSpeexOggWriter.m */,
 				ACC94954177744F700F4736B /* vSpeexOggReader.h */,
@@ -185,6 +191,8 @@
 				ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */,
 				111732AB1777DDA000589C28 /* vSpeexRecorder.h in Headers */,
 				111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */,
+				ACDBAFA5177DEA260046331B /* vSpeexWriter.h in Headers */,
+				ACDBAFA6177DEA260046331B /* vSpeexReader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
