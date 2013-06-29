@@ -66,9 +66,7 @@
         }
         
         SpeexHeader header;
-        
-        NSLog(@"%ld",sizeof(header));
-        
+       
         speex_init_header(&header, speex.samplingRate, 1, m);
         
         header.vbr = 0;

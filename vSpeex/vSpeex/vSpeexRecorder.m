@@ -14,6 +14,7 @@
 #define AUDIO_RECORD_BUFFER_SIZE		4	
 
 @interface vSpeexRecorder(){
+    
     AudioQueueRef _queue;
     AudioQueueBufferRef _buffers[AUDIO_RECORD_BUFFER_SIZE];
     AudioStreamBasicDescription format;
@@ -21,6 +22,7 @@
     
     BOOL _finished;
     BOOL _executing;
+    
 }
 
 @property(nonatomic,retain) vSpeexOggWriter * writer;
@@ -42,12 +44,14 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 	inBuffer->mAudioDataByteSize = 0;
 	
 	AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
+    
 }
 
 
 @implementation vSpeexRecorder
 
 @synthesize writer = _writer;
+@synthesize delegate = _delegate;
 
 -(void) dealloc{
     [_writer close];
@@ -56,6 +60,7 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 }
 
 -(id) initWithWriter:(id<vSpeexWriter>)writer{
+    
     if((self = [super init])){
         _writer = [writer retain];
         if(_writer == nil){
@@ -124,6 +129,14 @@ static void vSpeexRecorder_AudioQueueInputCallback(
         
         status = AudioQueueStart(_queue, NULL);
         
+        if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStarted:)]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+           
+                [_delegate vSpeexRecorderDidStarted:self];
+            
+            });
+        }
+        
         while(![self isCancelled] && !_finished){
             @autoreleasepool {
                 [runloop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.3]];
@@ -139,6 +152,17 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 		AudioQueueDispose(_queue, YES);
       
         [_writer close];
+        
+        
+        if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStoped:)]){
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [_delegate vSpeexRecorderDidStoped:self];
+                
+            });
+            
+        }
         
     }
     

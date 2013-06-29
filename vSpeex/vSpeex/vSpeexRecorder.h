@@ -14,6 +14,18 @@
 
 @interface vSpeexRecorder : NSOperation
 
+@property(nonatomic,unsafe_unretained) id delegate;
+
 -(id) initWithWriter:(id<vSpeexWriter>) writer;
+
+@end
+
+@protocol vSpeexRecorderDelegate
+
+@optional
+
+-(void) vSpeexRecorderDidStarted:(vSpeexRecorder *) recorder;
+
+-(void) vSpeexRecorderDidStoped:(vSpeexRecorder *)recorder;
 
 @end
