@@ -38,7 +38,7 @@
             return nil;
         }
         
-        char data[80];
+        char data[sizeof(SpeexHeader)];
         
         if(sizeof(data) != fread(data, 1, sizeof(data), _file)){
             [self autorelease];
