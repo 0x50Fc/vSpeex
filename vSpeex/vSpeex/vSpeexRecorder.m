@@ -13,7 +13,6 @@
 
 #define AUDIO_RECORD_BUFFER_SIZE		4	
 
-
 @interface vSpeexRecorder(){
     AudioQueueRef _queue;
     AudioQueueBufferRef _buffers[AUDIO_RECORD_BUFFER_SIZE];
@@ -56,9 +55,9 @@ static void vSpeexRecorder_AudioQueueInputCallback(
     [super dealloc];
 }
 
--(id) initWithFilePath:(NSString *) filePath speex:(vSpeex *) speex{
+-(id) initWithWriter:(id<vSpeexWriter>)writer{
     if((self = [super init])){
-        _writer = [[vSpeexOggWriter alloc] initWithFilePath:filePath speex:speex];
+        _writer = [writer retain];
         if(_writer == nil){
             [self autorelease];
             return nil;
@@ -100,9 +99,9 @@ static void vSpeexRecorder_AudioQueueInputCallback(
         
 
         _bufferSize = [_writer.speex frameBytes];
-        
+
         format.mFormatID = kAudioFormatLinearPCM;
-        format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
+        format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
         format.mChannelsPerFrame = 1;
         format.mBitsPerChannel = 16;
         format.mFramesPerPacket = 1;

@@ -173,6 +173,8 @@
                 _ebuf = malloc(_speex.frameBytes);
             }
             
+            memset(_ebuf, 0, _speex.frameBytes);
+            
             [_speex decodeFrame:op.packet length:op.bytes frameBytes:_ebuf];
             
             return _ebuf;

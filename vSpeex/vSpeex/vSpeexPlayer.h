@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import <vSpeex/vSpeexReader.h>
 
 @interface vSpeexPlayer : NSOperation
 
--(id) initWithFilePath:(NSString *) filePath;
+-(id) initWithReader:(id<vSpeexReader>) reader;
 
 @end

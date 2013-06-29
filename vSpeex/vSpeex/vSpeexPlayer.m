@@ -11,9 +11,11 @@
 
 #import <vSpeex/vSpeexOggReader.h>
 
+#define AUDIO_RECORD_BUFFER_SIZE		4
+
 @interface vSpeexPlayer(){
     AudioQueueRef _queue;
-    AudioQueueBufferRef _buffer;
+    AudioQueueBufferRef _buffers[AUDIO_RECORD_BUFFER_SIZE];
     AudioStreamBasicDescription format;
     int _bufferSize;
     BOOL _finished;
@@ -82,45 +84,47 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         
         NSRunLoop * runloop = [NSRunLoop currentRunLoop];
         
-        void * data = [_reader readFrame];
+        _bufferSize = [_reader.speex frameBytes];
         
-        if(data){
-            
-            _bufferSize = [_reader.speex frameBytes];
-            
-            format.mFormatID = kAudioFormatLinearPCM;
-            format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
-            format.mChannelsPerFrame = 1;
-            format.mBitsPerChannel = 16;
-            format.mFramesPerPacket = 1;
-            format.mBytesPerPacket =  2;
-            format.mBytesPerFrame = 2;
-            format.mSampleRate = _reader.speex.samplingRate;
-            
-            OSStatus status;
-            
-            status = AudioQueueNewOutput(&format, vSpeexPlayer_AudioQueueOutputCallback, self, CFRunLoopGetCurrent(), kCFRunLoopCommonModes, 0, &_queue);
-            
-            status = AudioQueueAllocateBuffer(_queue,_bufferSize,&_buffer);
-            
-            _buffer->mAudioDataByteSize = _bufferSize;
-            
-            memcpy(_buffer->mAudioData, data, _buffer->mAudioDataByteSize);
-            
-            AudioQueueEnqueueBuffer(_queue, _buffer, 0, NULL);
-            
-            status = AudioQueuePrime(_queue, 0, NULL);
-            
-            AudioQueueSetParameter(_queue, kAudioQueueParam_Volume, 1.0);
+        format.mFormatID = kAudioFormatLinearPCM;
+        format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
+        format.mChannelsPerFrame = 1;
+        format.mBitsPerChannel = 16;
+        format.mFramesPerPacket = 1;
+        format.mBytesPerPacket =  2;
+        format.mBytesPerFrame = 2;
+        format.mSampleRate = _reader.speex.samplingRate;
         
-            status = AudioQueueStart(_queue, NULL);
+        OSStatus status;
+        
+        status = AudioQueueNewOutput(&format, vSpeexPlayer_AudioQueueOutputCallback, self, CFRunLoopGetCurrent(), kCFRunLoopCommonModes, 0, &_queue);
+        
+        for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
             
+            AudioQueueAllocateBuffer(_queue,_bufferSize,&_buffers[i]);
+
         }
-        else{
-            _executing = NO;
-            _finished = YES;
-            return;
+        
+        for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
+            
+            void * data = [_reader readFrame];
+            if(data){
+                _buffers[i]->mAudioDataByteSize = _bufferSize;
+                memcpy(_buffers[i]->mAudioData, data, _buffers[i]->mAudioDataByteSize);
+                AudioQueueEnqueueBuffer(_queue, _buffers[i], 0, NULL);
+            }
+            else{
+                break;
+            }
+           
         }
+        
+        status = AudioQueuePrime(_queue, 0, NULL);
+        
+        AudioQueueSetParameter(_queue, kAudioQueueParam_Volume, 1.0);
+        
+        status = AudioQueueStart(_queue, NULL);
+        
         
         while(![self isCancelled] && !_finished){
             @autoreleasepool {
@@ -130,12 +134,16 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         
         AudioQueueStop(_queue, YES);
 		
-		AudioQueueFreeBuffer(_queue,_buffer);
+        for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
+            
+            AudioQueueFreeBuffer(_queue,_buffers[i]);
+            
+        }
+        
 		
 		AudioQueueDispose(_queue, YES);
         
-        
-        _buffer = NULL;
+       
         _queue = NULL;
         
     }
@@ -143,9 +151,9 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
     _executing = NO;
 }
 
--(id) initWithFilePath:(NSString *) filePath{
+-(id) initWithReader:(id<vSpeexReader>) reader{
     if((self = [super init])){
-        _reader = [[vSpeexOggReader alloc] initWithFilePath:filePath];
+        _reader = [reader retain];
         if(_reader == nil){
             [self autorelease];
             return nil;

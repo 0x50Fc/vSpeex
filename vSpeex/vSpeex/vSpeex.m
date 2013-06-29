@@ -34,7 +34,7 @@
 -(id) initWithMode:(vSpeexMode) mode{
     if((self = [super init])){
         
-        _quality = 10;
+        _quality = 5;
         _mode = mode;
         
         switch (mode) {
@@ -67,13 +67,11 @@
         speex_encoder_ctl(_encodeState,SPEEX_SET_DTX,&b);
         speex_encoder_ctl(_encodeState,SPEEX_SET_VAD,&b);
         
-        speex_decoder_ctl(_decodeState,SPEEX_SET_ENH,&b);
-        
         _preprocessState = speex_preprocess_state_init(_frameSize,_samplingRate);
         
         speex_preprocess_ctl(_preprocessState, SPEEX_PREPROCESS_SET_DENOISE, &b);
         
-        _echoState = speex_echo_state_init(_frameSize, 50 );
+        _echoState = speex_echo_state_init(_frameSize, 100 );
         
         _frameBytes = _frameSize * sizeof(spx_int16_t);
         
@@ -141,10 +139,15 @@
     speex_bits_reset(&_bits);
     speex_bits_read_from(&_bits, encodeBytes, length);
     rs = speex_decode_int(_decodeState, &_bits, frameBytes);
-    speex_preprocess_run(_preprocessState, frameBytes);
-    
+   
     return rs ==0 ? _frameBytes : 0;
 
+}
+
+
+-(void) setQuality:(NSInteger)quality{
+    _quality = quality;
+    speex_encoder_ctl(_encodeState,SPEEX_SET_QUALITY,&_samplingRate);
 }
 
 @end

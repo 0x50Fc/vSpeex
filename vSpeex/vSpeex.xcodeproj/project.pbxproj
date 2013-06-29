@@ -20,6 +20,10 @@
 		ACC94956177744F800F4736B /* vSpeexOggReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC94954177744F700F4736B /* vSpeexOggReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACDBAFA5177DEA260046331B /* vSpeexWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFA3177DE9A00046331B /* vSpeexWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACDBAFA6177DEA260046331B /* vSpeexReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFA4177DE9BB0046331B /* vSpeexReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACDBAFAA177E69BD0046331B /* vSpeexStreamWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFA8177E69BD0046331B /* vSpeexStreamWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACDBAFAB177E69BD0046331B /* vSpeexStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = ACDBAFA9177E69BD0046331B /* vSpeexStreamWriter.m */; };
+		ACDBAFAE177E6B800046331B /* vSpeexStreamReader.h in Headers */ = {isa = PBXBuildFile; fileRef = ACDBAFAC177E6B800046331B /* vSpeexStreamReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACDBAFAF177E6B800046331B /* vSpeexStreamReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ACDBAFAD177E6B800046331B /* vSpeexStreamReader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +63,10 @@
 		ACC94955177744F700F4736B /* vSpeexOggReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexOggReader.m; sourceTree = "<group>"; };
 		ACDBAFA3177DE9A00046331B /* vSpeexWriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vSpeexWriter.h; sourceTree = "<group>"; };
 		ACDBAFA4177DE9BB0046331B /* vSpeexReader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vSpeexReader.h; sourceTree = "<group>"; };
+		ACDBAFA8177E69BD0046331B /* vSpeexStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexStreamWriter.h; sourceTree = "<group>"; };
+		ACDBAFA9177E69BD0046331B /* vSpeexStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexStreamWriter.m; sourceTree = "<group>"; };
+		ACDBAFAC177E6B800046331B /* vSpeexStreamReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexStreamReader.h; sourceTree = "<group>"; };
+		ACDBAFAD177E6B800046331B /* vSpeexStreamReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexStreamReader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,10 @@
 				111732AA1777DDA000589C28 /* vSpeexRecorder.m */,
 				111732C31777FB0400589C28 /* vSpeexPlayer.h */,
 				111732C41777FB0400589C28 /* vSpeexPlayer.m */,
+				ACDBAFA8177E69BD0046331B /* vSpeexStreamWriter.h */,
+				ACDBAFA9177E69BD0046331B /* vSpeexStreamWriter.m */,
+				ACDBAFAC177E6B800046331B /* vSpeexStreamReader.h */,
+				ACDBAFAD177E6B800046331B /* vSpeexStreamReader.m */,
 			);
 			path = vSpeex;
 			sourceTree = "<group>";
@@ -193,6 +205,8 @@
 				111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */,
 				ACDBAFA5177DEA260046331B /* vSpeexWriter.h in Headers */,
 				ACDBAFA6177DEA260046331B /* vSpeexReader.h in Headers */,
+				ACDBAFAA177E69BD0046331B /* vSpeexStreamWriter.h in Headers */,
+				ACDBAFAE177E6B800046331B /* vSpeexStreamReader.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +278,8 @@
 				111732AC1777DDA000589C28 /* vSpeexRecorder.m in Sources */,
 				111732B71777F0C900589C28 /* vSpeexOggReader.m in Sources */,
 				111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */,
+				ACDBAFAB177E69BD0046331B /* vSpeexStreamWriter.m in Sources */,
+				ACDBAFAF177E6B800046331B /* vSpeexStreamReader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

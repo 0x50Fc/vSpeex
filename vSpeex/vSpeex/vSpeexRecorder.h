@@ -10,9 +10,10 @@
 
 
 #import <vSpeex/vSpeex.h>
+#import <vSpeex/vSpeexWriter.h>
 
 @interface vSpeexRecorder : NSOperation
 
--(id) initWithFilePath:(NSString *) filePath speex:(vSpeex *) speex;
+-(id) initWithWriter:(id<vSpeexWriter>) writer;
 
 @end

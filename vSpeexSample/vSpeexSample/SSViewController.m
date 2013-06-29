@@ -10,6 +10,8 @@
 
 #import <vSpeex/vSpeexRecorder.h>
 #import <vSpeex/vSpeexPlayer.h>
+#import <vSpeex/vSpeexStreamWriter.h>
+#import <vSpeex/vSpeexStreamReader.h>
 
 @interface SSViewController ()
 
@@ -52,8 +54,10 @@
         [sender setSelected:NO];
     }
     else{
-        self.player = [[vSpeexPlayer alloc] initWithFilePath:
-                       [NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"]];
+        
+        vSpeexStreamReader * reader = [[vSpeexStreamReader alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.spx"]];
+        
+        self.player = [[vSpeexPlayer alloc] initWithReader:reader];
         [_operationQueue addOperation:_player];
         [sender setSelected:YES];
     }
@@ -65,7 +69,10 @@
         [sender setSelected:NO];
     }
     else{
-        self.recorder = [[vSpeexRecorder alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.ogg"] speex:[[vSpeex alloc] initWithMode:vSpeexModeWB]];
+        vSpeex * speex = [[vSpeex alloc] initWithMode:vSpeexModeWB];
+        vSpeexStreamWriter * writer = [[vSpeexStreamWriter alloc] initWithFilePath:[NSTemporaryDirectory() stringByAppendingPathComponent:@"r.spx"] speex:speex];
+        
+        self.recorder = [[vSpeexRecorder alloc] initWithWriter:writer];
         
         [_operationQueue addOperation:_recorder];
         

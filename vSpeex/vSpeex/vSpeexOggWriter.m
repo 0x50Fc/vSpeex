@@ -128,6 +128,8 @@
         _ebuf = malloc(length);
     }
     
+    memset(_ebuf, 0, length);
+    
     if((length = [_speex encodeFrame:frameBytes encodeBytes:_ebuf echoBytes:echoBytes]) > 0){
     
         
