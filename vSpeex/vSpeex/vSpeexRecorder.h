@@ -15,8 +15,11 @@
 @interface vSpeexRecorder : NSOperation
 
 @property(nonatomic,unsafe_unretained) id delegate;
+@property(nonatomic,readonly) NSTimeInterval duration;
 
 -(id) initWithWriter:(id<vSpeexWriter>) writer;
+
+-(void) stop;
 
 @end
 

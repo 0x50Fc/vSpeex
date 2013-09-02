@@ -22,10 +22,18 @@
     
     BOOL _finished;
     BOOL _executing;
+    BOOL _stoping;
     
 }
 
 @property(nonatomic,retain) vSpeexOggWriter * writer;
+@property(nonatomic,assign) NSTimeInterval frameDuration;
+
+-(void) addDuration:(NSTimeInterval) duration;
+
+-(void) setFinished:(BOOL) finished;
+
+-(BOOL) isStoping;
 
 @end
 
@@ -37,14 +45,36 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 										 UInt32                          inNumberPacketDescriptions,
 										 const AudioStreamPacketDescription *inPacketDescs){
 	
-    vSpeexOggWriter * writer = (vSpeexOggWriter *) inUserData;
+    vSpeexRecorder * recorder = (vSpeexRecorder *) inUserData;
+    
+    vSpeexOggWriter * writer = [recorder writer];
+    
+    [recorder addDuration:recorder.frameDuration];
     
     [writer writeFrame:inBuffer->mAudioData echoBytes:nil];
     
-	inBuffer->mAudioDataByteSize = 0;
+    if(![recorder isStoping]){
+        inBuffer->mAudioDataByteSize = 0;
 	
-	AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
+        AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
+    }
     
+}
+
+static void vSpeexRecorder_AudioQueuePropertyListener(
+                                                      void *                  inUserData,
+                                                      AudioQueueRef           inAQ,
+                                                      AudioQueuePropertyID    inID){
+    
+    vSpeexRecorder * recorder = (vSpeexRecorder *) inUserData;
+    
+    UInt32 f = 0;
+
+    AudioQueueGetProperty(inAQ, inID, &f, NULL);
+    
+    if(f == 0){
+        [recorder setFinished:YES];
+    }
 }
 
 
@@ -52,6 +82,8 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 
 @synthesize writer = _writer;
 @synthesize delegate = _delegate;
+@synthesize duration = _duration;
+@synthesize frameDuration = _frameDuration;
 
 -(void) dealloc{
     [_writer close];
@@ -91,7 +123,30 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 
 -(void) cancel{
     [super cancel];
+    if(_queue){
+        AudioQueueStop(_queue, YES);
+    }
     _finished = YES;
+}
+
+-(void) stop{
+    if(!_stoping){
+        
+        _stoping = YES;
+        
+        if(_queue){
+            
+            AudioQueueStop(_queue, NO);
+            
+            UInt32 f = 0;
+            
+            AudioQueueGetProperty(_queue, kAudioQueueProperty_IsRunning, &f, NULL);
+            
+            if(f == 0){
+                [self setFinished:YES];
+            }
+        }
+    }
 }
 
 -(void) main{
@@ -114,9 +169,11 @@ static void vSpeexRecorder_AudioQueueInputCallback(
         format.mBytesPerFrame = 2;
         format.mSampleRate = _writer.speex.samplingRate;
         
+        _frameDuration = (NSTimeInterval) [_writer.speex frameSize] / format.mSampleRate;
+        
         OSStatus status;
       
-        status = AudioQueueNewInput(&format, vSpeexRecorder_AudioQueueInputCallback, _writer, [runloop getCFRunLoop], kCFRunLoopCommonModes, 0, &_queue);
+        status = AudioQueueNewInput(&format, vSpeexRecorder_AudioQueueInputCallback, self, [runloop getCFRunLoop], kCFRunLoopCommonModes, 0, &_queue);
         
         for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
             status = AudioQueueAllocateBuffer(_queue,_bufferSize,&_buffers[i]);
@@ -128,6 +185,8 @@ static void vSpeexRecorder_AudioQueueInputCallback(
         AudioQueueSetParameter(_queue, kAudioQueueParam_Volume, 1.0);
         
         status = AudioQueueStart(_queue, NULL);
+        
+        AudioQueueAddPropertyListener(_queue, kAudioQueueProperty_IsRunning, vSpeexRecorder_AudioQueuePropertyListener, self);
         
         if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStarted:)]){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -143,7 +202,7 @@ static void vSpeexRecorder_AudioQueueInputCallback(
             }
         }
         
-        AudioQueueStop(_queue, YES);
+        
 		
 		for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
 			AudioQueueFreeBuffer(_queue,_buffers[i]);
@@ -167,6 +226,18 @@ static void vSpeexRecorder_AudioQueueInputCallback(
     }
     
     _executing = NO;
+}
+
+-(void) addDuration:(NSTimeInterval) duration{
+    _duration += duration;
+}
+
+-(void) setFinished:(BOOL) finished{
+    _finished = finished;
+}
+
+-(BOOL) isStoping{
+    return _stoping;
 }
 
 @end
