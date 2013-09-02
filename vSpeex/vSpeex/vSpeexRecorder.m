@@ -24,12 +24,12 @@
     BOOL _executing;
     BOOL _stoping;
     
+    NSTimeInterval _beginTimeInterval;
+    
 }
 
 @property(nonatomic,retain) vSpeexOggWriter * writer;
 @property(nonatomic,assign) NSTimeInterval frameDuration;
-
--(void) addDuration:(NSTimeInterval) duration;
 
 -(void) setFinished:(BOOL) finished;
 
@@ -48,8 +48,6 @@ static void vSpeexRecorder_AudioQueueInputCallback(
     vSpeexRecorder * recorder = (vSpeexRecorder *) inUserData;
     
     vSpeexOggWriter * writer = [recorder writer];
-    
-    [recorder addDuration:recorder.frameDuration];
     
     [writer writeFrame:inBuffer->mAudioData echoBytes:nil];
     
@@ -74,6 +72,7 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
     
     if(f == 0){
         [recorder setFinished:YES];
+        
     }
 }
 
@@ -188,6 +187,8 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
         
         AudioQueueAddPropertyListener(_queue, kAudioQueueProperty_IsRunning, vSpeexRecorder_AudioQueuePropertyListener, self);
         
+        _beginTimeInterval = CFAbsoluteTimeGetCurrent();
+        
         if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStarted:)]){
             dispatch_async(dispatch_get_main_queue(), ^{
            
@@ -224,16 +225,13 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
         }
         
     }
-    
-    _executing = NO;
-}
 
--(void) addDuration:(NSTimeInterval) duration{
-    _duration += duration;
+    _executing = NO;
 }
 
 -(void) setFinished:(BOOL) finished{
     _finished = finished;
+    _duration = CFAbsoluteTimeGetCurrent() - _beginTimeInterval;
 }
 
 -(BOOL) isStoping{

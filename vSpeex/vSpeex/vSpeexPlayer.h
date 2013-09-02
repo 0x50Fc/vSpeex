@@ -12,6 +12,16 @@
 
 @interface vSpeexPlayer : NSOperation
 
+@property(nonatomic,assign) id delegate;
+
 -(id) initWithReader:(id<vSpeexReader>) reader;
+
+@end
+
+@protocol vSpeexPlayerDelegate
+
+@optional
+
+-(void) vSpeexPlayerDidFinished:(vSpeexPlayer *) player;
 
 @end

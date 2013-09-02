@@ -25,6 +25,8 @@
 @property(nonatomic,assign) int bufferSize;
 @property(nonatomic,retain) vSpeexOggReader * reader;
 
+-(void) setFinished:(BOOL) finished;
+
 @end
 
 static void vSpeexPlayer_AudioQueueOutputCallback(
@@ -43,12 +45,14 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
     }
     else{
-        [player cancel];
+        [player setFinished:YES];
     }
 }
 
 
 @implementation vSpeexPlayer
+
+@synthesize delegate = _delegate;
 
 -(void) dealloc{
     [_reader release];
@@ -146,6 +150,16 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
        
         _queue = NULL;
         
+        if([_delegate respondsToSelector:@selector(vSpeexPlayerDidFinished:)] && ![self isCancelled]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+               
+                if([_delegate respondsToSelector:@selector(vSpeexPlayerDidFinished:)]){
+                    [_delegate vSpeexPlayerDidFinished: self];
+                }
+                
+            });
+        }
+        
     }
     
     _executing = NO;
@@ -160,6 +174,10 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         }
     }
     return self;
+}
+
+-(void) setFinished:(BOOL) finished{
+    _finished = finished;
 }
 
 @end
