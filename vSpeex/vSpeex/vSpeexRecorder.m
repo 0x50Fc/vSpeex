@@ -276,6 +276,9 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 }
 
 -(NSTimeInterval) duration{
+    if(_beginTimeInterval == 0){
+        return 0;
+    }
     if(_finished){
         return _duration;
     }
