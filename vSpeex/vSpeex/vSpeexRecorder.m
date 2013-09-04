@@ -35,6 +35,8 @@
 
 -(BOOL) isStoping;
 
+-(void) setFrameBytes:(SInt16 *) bytes;
+
 @end
 
 static void vSpeexRecorder_AudioQueueInputCallback(
@@ -51,7 +53,10 @@ static void vSpeexRecorder_AudioQueueInputCallback(
     
     [writer writeFrame:inBuffer->mAudioData echoBytes:nil];
     
+    [recorder setFrameBytes:inBuffer->mAudioData];
+    
     if(![recorder isStoping]){
+        
         inBuffer->mAudioDataByteSize = 0;
 	
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
@@ -83,10 +88,15 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 @synthesize delegate = _delegate;
 @synthesize duration = _duration;
 @synthesize frameDuration = _frameDuration;
+@synthesize frameBytes = _frameBytes;
+@synthesize frameSize = _frameSize;
 
 -(void) dealloc{
     [_writer close];
     [_writer release];
+    if(_frameBytes){
+        free(_frameBytes);
+    }
     [super dealloc];
 }
 
@@ -154,11 +164,40 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
     
     @autoreleasepool {
         
+        _beginTimeInterval = CFAbsoluteTimeGetCurrent();
+        
+        if(_stoping){
+            
+            _executing = NO;
+            _finished = YES;
+            
+            if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStoped:)]){
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [_delegate vSpeexRecorderDidStoped:self];
+                    
+                });
+                
+            }
+            
+            return;
+        }
+        
         NSRunLoop * runloop = [NSRunLoop currentRunLoop];
         
-
         _bufferSize = [_writer.speex frameBytes];
-
+        _frameSize = [_writer.speex frameSize];
+        
+        if(_frameBytes == NULL){
+            _frameBytes = malloc(_bufferSize);
+        }
+        else{
+            _frameBytes = realloc(_frameBytes, _bufferSize);
+        }
+        
+        memset(_frameBytes, 0, _bufferSize);
+        
         format.mFormatID = kAudioFormatLinearPCM;
         format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
         format.mChannelsPerFrame = 1;
@@ -186,8 +225,6 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
         status = AudioQueueStart(_queue, NULL);
         
         AudioQueueAddPropertyListener(_queue, kAudioQueueProperty_IsRunning, vSpeexRecorder_AudioQueuePropertyListener, self);
-        
-        _beginTimeInterval = CFAbsoluteTimeGetCurrent();
         
         if([_delegate respondsToSelector:@selector(vSpeexRecorderDidStarted:)]){
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -236,6 +273,19 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 
 -(BOOL) isStoping{
     return _stoping;
+}
+
+-(NSTimeInterval) duration{
+    if(_finished){
+        return _duration;
+    }
+    return CFAbsoluteTimeGetCurrent() - _beginTimeInterval;
+}
+
+-(void) setFrameBytes:(SInt16 *) bytes{
+    if(_frameBytes){
+        memcpy(_frameBytes, bytes, _frameSize * sizeof(SInt16));
+    }
 }
 
 @end

@@ -16,6 +16,8 @@
 
 @property(nonatomic,unsafe_unretained) id delegate;
 @property(nonatomic,readonly) NSTimeInterval duration;
+@property(nonatomic,readonly) SInt16 * frameBytes;
+@property(nonatomic,readonly) UInt32 frameSize;
 
 -(id) initWithWriter:(id<vSpeexWriter>) writer;
 
