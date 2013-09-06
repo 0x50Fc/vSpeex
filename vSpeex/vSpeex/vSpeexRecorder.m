@@ -56,9 +56,7 @@ static void vSpeexRecorder_AudioQueueInputCallback(
     [recorder setFrameBytes:inBuffer->mAudioData];
     
     if(![recorder isStoping]){
-        
         inBuffer->mAudioDataByteSize = 0;
-	
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
     }
     
@@ -77,7 +75,7 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
     
     if(f == 0){
         [recorder setFinished:YES];
-        
+
     }
 }
 
@@ -140,9 +138,7 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 
 -(void) stop{
     if(!_stoping){
-        
-        _stoping = YES;
-        
+
         if(_queue){
             
             AudioQueueStop(_queue, NO);
@@ -155,6 +151,8 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
                 [self setFinished:YES];
             }
         }
+        
+        _stoping = YES;
     }
 }
 
@@ -239,9 +237,9 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
                 [runloop runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.3]];
             }
         }
+
+        AudioQueueStop(_queue, YES);
         
-        
-		
 		for(int i=0;i<AUDIO_RECORD_BUFFER_SIZE;i++){
 			AudioQueueFreeBuffer(_queue,_buffers[i]);
 		}
