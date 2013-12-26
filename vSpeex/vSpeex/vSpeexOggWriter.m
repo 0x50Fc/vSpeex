@@ -87,7 +87,7 @@
         
         op.packet = data;
         op.bytes = bytes;
-        op.b_o_s = 0;
+        op.b_o_s = 1;
         op.e_o_s = 0;
         op.granulepos = 0;
         op.packetno = _packetno++;
@@ -141,7 +141,7 @@
         op.bytes = length;
         op.b_o_s = 0;
         op.e_o_s = 0;
-        op.granulepos = 0;
+        op.granulepos = _packetno-1;
         op.packetno = _packetno++;
         
         ogg_stream_reset(& _os);
@@ -179,7 +179,7 @@
         op.bytes = 0;
         op.b_o_s = 0;
         op.e_o_s = 1;
-        op.granulepos = 0;
+        op.granulepos = _packetno -1;
         op.packetno = _packetno++;
         
         ogg_stream_reset(& _os);

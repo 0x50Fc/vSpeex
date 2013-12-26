@@ -23,6 +23,7 @@
 		111732B31777E22500589C28 /* libogg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 111732AD1777E1F700589C28 /* libogg.a */; };
 		111732B41777E22800589C28 /* libspeex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 111732AE1777E1F700589C28 /* libspeex.a */; };
 		111732B51777E22900589C28 /* libspeexdsp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 111732AF1777E1F700589C28 /* libspeexdsp.a */; };
+		11B736D7186C30AA00EDB6F6 /* audio.html in Resources */ = {isa = PBXBuildFile; fileRef = 11B736D6186C30A900EDB6F6 /* audio.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		111732AD1777E1F700589C28 /* libogg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libogg.a; path = ../lib/libogg.a; sourceTree = "<group>"; };
 		111732AE1777E1F700589C28 /* libspeex.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspeex.a; path = ../lib/libspeex.a; sourceTree = "<group>"; };
 		111732AF1777E1F700589C28 /* libspeexdsp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libspeexdsp.a; path = ../lib/libspeexdsp.a; sourceTree = "<group>"; };
+		11B736D6186C30A900EDB6F6 /* audio.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = audio.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 				111732941777DD1300589C28 /* SSViewController.m */,
 				111732961777DD1300589C28 /* SSViewController.xib */,
 				111732821777DD1300589C28 /* Supporting Files */,
+				11B736D6186C30A900EDB6F6 /* audio.html */,
 			);
 			path = vSpeexSample;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				111732901777DD1300589C28 /* Default@2x.png in Resources */,
 				111732921777DD1300589C28 /* Default-568h@2x.png in Resources */,
 				111732981777DD1300589C28 /* SSViewController.xib in Resources */,
+				11B736D7186C30AA00EDB6F6 /* audio.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
