@@ -23,6 +23,10 @@
 
 -(void) stop;
 
+-(void) resume;
+
+-(void) pause;
+
 @end
 
 @protocol vSpeexRecorderDelegate

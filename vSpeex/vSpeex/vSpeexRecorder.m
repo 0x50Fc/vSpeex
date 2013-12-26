@@ -25,6 +25,7 @@
     BOOL _stoping;
     
     NSTimeInterval _beginTimeInterval;
+    NSTimeInterval _pauseTimeInterval;
     
 }
 
@@ -286,6 +287,20 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 -(void) setFrameBytes:(SInt16 *) bytes{
     if(_frameBytes){
         memcpy(_frameBytes, bytes, _frameSize * sizeof(SInt16));
+    }
+}
+
+-(void) resume{
+    if(_queue && _pauseTimeInterval != 0.0){
+        _beginTimeInterval += CFAbsoluteTimeGetCurrent() - _pauseTimeInterval;
+        AudioQueueStart(_queue, NULL);
+    }
+}
+
+-(void) pause{
+    if(_queue && _pauseTimeInterval == 0.0){
+        _pauseTimeInterval = CFAbsoluteTimeGetCurrent();
+        AudioQueuePause(_queue);
     }
 }
 
