@@ -281,6 +281,9 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
     if(_finished){
         return _duration;
     }
+    if(_pauseTimeInterval){
+        return _pauseTimeInterval - _beginTimeInterval;
+    }
     return CFAbsoluteTimeGetCurrent() - _beginTimeInterval;
 }
 
@@ -293,6 +296,7 @@ static void vSpeexRecorder_AudioQueuePropertyListener(
 -(void) resume{
     if(_queue && _pauseTimeInterval != 0.0){
         _beginTimeInterval += CFAbsoluteTimeGetCurrent() - _pauseTimeInterval;
+        _pauseTimeInterval = 0.0;
         AudioQueueStart(_queue, NULL);
     }
 }

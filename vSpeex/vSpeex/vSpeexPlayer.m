@@ -24,8 +24,11 @@
 
 @property(nonatomic,assign) int bufferSize;
 @property(nonatomic,retain) vSpeexOggReader * reader;
+@property(nonatomic,assign) NSTimeInterval beginTimeInterval;
 
 -(void) setFinished:(BOOL) finished;
+
+-(void) setFrameBytes:(SInt16 *) bytes;
 
 @end
 
@@ -42,6 +45,7 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
     
     if(data){
         memcpy(inBuffer->mAudioData, data, inBuffer->mAudioDataByteSize);
+        [player setFrameBytes:inBuffer->mAudioData];
         AudioQueueEnqueueBuffer(inAQ, inBuffer, 0, NULL);
     }
     else{
@@ -53,9 +57,15 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
 @implementation vSpeexPlayer
 
 @synthesize delegate = _delegate;
+@synthesize frameBytes = _frameBytes;
+@synthesize frameSize = _frameSize;
+@synthesize beginTimeInterval = _beginTimeInterval;
 
 -(void) dealloc{
     [_reader release];
+    if(_frameBytes){
+        free(_frameBytes);
+    }
     [super dealloc];
 }
 
@@ -89,6 +99,16 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         NSRunLoop * runloop = [NSRunLoop currentRunLoop];
         
         _bufferSize = [_reader.speex frameBytes];
+        _frameSize = [_reader.speex frameSize];
+        
+        if(_frameBytes == NULL){
+            _frameBytes = malloc(_bufferSize);
+        }
+        else{
+            _frameBytes = realloc(_frameBytes, _bufferSize);
+        }
+        
+        memset(_frameBytes, 0, _bufferSize);
         
         format.mFormatID = kAudioFormatLinearPCM;
         format.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
@@ -98,6 +118,8 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
         format.mBytesPerPacket =  2;
         format.mBytesPerFrame = 2;
         format.mSampleRate = _reader.speex.samplingRate;
+ 
+        _beginTimeInterval = CFAbsoluteTimeGetCurrent();
         
         OSStatus status;
         
@@ -178,6 +200,21 @@ static void vSpeexPlayer_AudioQueueOutputCallback(
 
 -(void) setFinished:(BOOL) finished{
     _finished = finished;
+}
+
+-(void) setFrameBytes:(SInt16 *) bytes{
+    if(_frameBytes){
+        memcpy(_frameBytes, bytes, _frameSize * sizeof(SInt16));
+    }
+}
+
+
+-(NSTimeInterval) duration{
+    if(_beginTimeInterval == 0.0){
+        return 0.0;
+    }
+    
+    return CFAbsoluteTimeGetCurrent() - _beginTimeInterval;
 }
 
 @end
