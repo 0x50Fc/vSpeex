@@ -50,11 +50,13 @@ static void vSpeexRecorder_AudioQueueInputCallback(
 	
     vSpeexRecorder * recorder = (vSpeexRecorder *) inUserData;
     
+    [recorder setFrameBytes:inBuffer->mAudioData];
+    
+    
     vSpeexOggWriter * writer = [recorder writer];
     
     [writer writeFrame:inBuffer->mAudioData echoBytes:nil];
-    
-    [recorder setFrameBytes:inBuffer->mAudioData];
+
     
     if(![recorder isStoping]){
         inBuffer->mAudioDataByteSize = 0;
