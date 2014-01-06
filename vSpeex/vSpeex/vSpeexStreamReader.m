@@ -104,15 +104,16 @@
         _dbuf = malloc(_speex.frameBytes);
     }
     
+    memset(_ebuf, 0, _speex.frameBytes);
+    
     l = ntohs(l);
     
-    if(l ==0){
-        memset(_ebuf, 0, _speex.frameBytes);
-    }
-    else{
+    if(l >0){
+        
         if(l != fread(_dbuf, 1, l, _file)){
             return NULL;
         }
+        
         [_speex decodeFrame:_dbuf length:l frameBytes:_ebuf];
     }
     
