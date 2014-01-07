@@ -12,6 +12,7 @@
 		111732B71777F0C900589C28 /* vSpeexOggReader.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC94955177744F700F4736B /* vSpeexOggReader.m */; };
 		111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 111732C31777FB0400589C28 /* vSpeexPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111732C41777FB0400589C28 /* vSpeexPlayer.m */; };
+		1178DA46187B9BD700B2C29A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 1178DA45187B9BD600B2C29A /* index.html */; };
 		ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACC949291777201800F4736B /* InfoPlist.strings */; };
 		ACC9494D1777212700F4736B /* vSpeex.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9494C1777212700F4736B /* vSpeex.m */; };
 		ACC9494F17772CA700F4736B /* vSpeex.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9494B1777212700F4736B /* vSpeex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +32,17 @@
 		111732AA1777DDA000589C28 /* vSpeexRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexRecorder.m; sourceTree = "<group>"; };
 		111732C31777FB0400589C28 /* vSpeexPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vSpeexPlayer.h; sourceTree = "<group>"; };
 		111732C41777FB0400589C28 /* vSpeexPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = vSpeexPlayer.m; sourceTree = "<group>"; };
+		1178DA3B187B9BBB00B2C29A /* codec.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = codec.js; sourceTree = "<group>"; };
+		1178DA3C187B9BBB00B2C29A /* decoder.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = decoder.js; sourceTree = "<group>"; };
+		1178DA3D187B9BBB00B2C29A /* encoder.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = encoder.js; sourceTree = "<group>"; };
+		1178DA3E187B9BBB00B2C29A /* libspeex.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = libspeex.js; sourceTree = "<group>"; };
+		1178DA3F187B9BBB00B2C29A /* libspeexdsp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = libspeexdsp.js; sourceTree = "<group>"; };
+		1178DA40187B9BBB00B2C29A /* ogg.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ogg.js; sourceTree = "<group>"; };
+		1178DA41187B9BBB00B2C29A /* preprocessor.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = preprocessor.js; sourceTree = "<group>"; };
+		1178DA42187B9BBB00B2C29A /* speex.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = speex.js; sourceTree = "<group>"; };
+		1178DA43187B9BBB00B2C29A /* types.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = types.js; sourceTree = "<group>"; };
+		1178DA44187B9BBB00B2C29A /* util.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = util.js; sourceTree = "<group>"; };
+		1178DA45187B9BD600B2C29A /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		ACC9491117771FE200F4736B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ACC949231777201800F4736B /* vSpeex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vSpeex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC949241777201800F4736B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -80,9 +92,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1178DA39187B9BBB00B2C29A /* js */ = {
+			isa = PBXGroup;
+			children = (
+				1178DA3A187B9BBB00B2C29A /* speex */,
+				1178DA45187B9BD600B2C29A /* index.html */,
+			);
+			name = js;
+			path = ../js;
+			sourceTree = "<group>";
+		};
+		1178DA3A187B9BBB00B2C29A /* speex */ = {
+			isa = PBXGroup;
+			children = (
+				1178DA3B187B9BBB00B2C29A /* codec.js */,
+				1178DA3C187B9BBB00B2C29A /* decoder.js */,
+				1178DA3D187B9BBB00B2C29A /* encoder.js */,
+				1178DA3E187B9BBB00B2C29A /* libspeex.js */,
+				1178DA3F187B9BBB00B2C29A /* libspeexdsp.js */,
+				1178DA40187B9BBB00B2C29A /* ogg.js */,
+				1178DA41187B9BBB00B2C29A /* preprocessor.js */,
+				1178DA42187B9BBB00B2C29A /* speex.js */,
+				1178DA43187B9BBB00B2C29A /* types.js */,
+				1178DA44187B9BBB00B2C29A /* util.js */,
+			);
+			path = speex;
+			sourceTree = "<group>";
+		};
 		ACC9490517771FE200F4736B = {
 			isa = PBXGroup;
 			children = (
+				1178DA39187B9BBB00B2C29A /* js */,
 				ACC94932177720DC00F4736B /* lib */,
 				ACC949261777201800F4736B /* vSpeex */,
 				ACC9491017771FE200F4736B /* Frameworks */,
@@ -263,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */,
+				1178DA46187B9BD700B2C29A /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

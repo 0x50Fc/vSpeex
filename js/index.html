@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script type="text/javascript" src="speex.js"></script>
+        <script type="text/javascript">
+            
+            function onLoad(){
+                
+                var url = "http://res.books.9vteam.com:82/audios/2014-01-03/e9251567d218a12f5464b32f374682be.spx";
+                
+                var xhr = null;
+                
+                if(window.XMLHttpRequest){
+                    xhr = new XMLHttpRequest();
+                }
+                else if(window.ActiveXObject){
+                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                
+                xhr.responseType = "blob";
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4){
+                        if(xhr.status == 200){
+                            Speex.parseHeader
+                        }
+                    }
+                };
+                
+                xhr.open("GET",url,true);
+                xhr.send();
+                
+            }
+        
+        </script>
+    </head>
+    <body onload="onLoad()">
+    </body>
+</html>
