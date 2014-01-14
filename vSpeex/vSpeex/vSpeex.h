@@ -18,7 +18,8 @@ typedef enum _vSpeexMode {
 @property(nonatomic,readonly) NSInteger frameSize;
 @property(nonatomic,readonly) NSInteger frameBytes;
 @property(nonatomic,assign) NSInteger samplingRate;
-@property(nonatomic,assign) NSInteger quality;  // 1~10 default 5
+@property(nonatomic,assign) NSInteger quality;  // 1~10 default 8
+@property(nonatomic,readonly) NSInteger bitSize;
 
 -(id) initWithMode:(vSpeexMode) mode;
 
@@ -26,5 +27,6 @@ typedef enum _vSpeexMode {
 
 -(NSInteger) decodeFrame:(void *) encodeBytes length:(NSInteger) length frameBytes:(void *) frameBytes;
 
++(NSInteger) bitSizeWithQuality:(NSInteger) quality;
 
 @end

@@ -72,7 +72,8 @@
         header.vbr = 0;
         header.bitrate = 16;
         header.frame_size = _speex.frameSize;
-        header.frames_per_packet = 0;
+        header.frames_per_packet = speex.bitSize;
+        header.reserved1 = speex.quality;
         
         int bytes = 0;
         void * data = speex_header_to_packet(&header, & bytes);
@@ -99,13 +100,7 @@
     
     if((length = [_speex encodeFrame:frameBytes encodeBytes:_ebuf echoBytes:echoBytes]) > 0){
         
-        unsigned short l = htons(length);
-        
-        fwrite(&l, 1, sizeof(l), _file);
-        
-        if(length >0){
-            fwrite(_ebuf, 1, length, _file);
-        }
+        fwrite(_ebuf, 1, _speex.bitSize, _file);
         
         return YES;
     }

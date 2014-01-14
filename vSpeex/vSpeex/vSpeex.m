@@ -12,6 +12,7 @@
 #include "speex/speex_preprocess.h"
 #include "speex/speex_echo.h"
 
+static NSInteger vSpeexBitSizes[] = {10,15,20,20,28,28,38,38,46,46};
 
 @interface vSpeex(){
     void * _encodeState;
@@ -30,11 +31,13 @@
 @synthesize samplingRate = _samplingRate;
 @synthesize quality = _quality;
 @synthesize frameBytes = _frameBytes;
+@synthesize bitSize = _bitSize;
 
 -(id) initWithMode:(vSpeexMode) mode{
     if((self = [super init])){
         
-        _quality = 5;
+        _quality = 8;
+        _bitSize = vSpeexBitSizes[_quality - 1];
         _mode = mode;
         
         switch (mode) {
@@ -147,7 +150,24 @@
 
 -(void) setQuality:(NSInteger)quality{
     _quality = quality;
+    if(_quality < 1){
+        _quality = 1;
+    }
+    if(_quality > 10){
+        _quality = 10;
+    }
+    _bitSize = vSpeexBitSizes[_quality - 1];
     speex_encoder_ctl(_encodeState,SPEEX_SET_QUALITY,&_samplingRate);
+}
+
++(NSInteger) bitSizeWithQuality:(NSInteger) quality{
+    if(quality < 1){
+        quality = 1;
+    }
+    if(quality > 10){
+        quality = 10;
+    }
+    return vSpeexBitSizes[quality -1];
 }
 
 @end

@@ -13,6 +13,14 @@
 		111732C51777FB0500589C28 /* vSpeexPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 111732C31777FB0400589C28 /* vSpeexPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 111732C41777FB0400589C28 /* vSpeexPlayer.m */; };
 		1178DA46187B9BD700B2C29A /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 1178DA45187B9BD600B2C29A /* index.html */; };
+		11ED1F28188504D4006860F5 /* aurora.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F21188504D4006860F5 /* aurora.js */; };
+		11ED1F29188504D4006860F5 /* bitstring.min.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F22188504D4006860F5 /* bitstring.min.js */; };
+		11ED1F2A188504D4006860F5 /* mediacapture.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F23188504D4006860F5 /* mediacapture.js */; };
+		11ED1F2B188504D4006860F5 /* pcmdata.min.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F24188504D4006860F5 /* pcmdata.min.js */; };
+		11ED1F2C188504D4006860F5 /* swfobject.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F25188504D4006860F5 /* swfobject.js */; };
+		11ED1F2D188504D4006860F5 /* usertiming.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F26188504D4006860F5 /* usertiming.js */; };
+		11ED1F2E188504D4006860F5 /* xaudio.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F27188504D4006860F5 /* xaudio.js */; };
+		11ED1F32188505AC006860F5 /* player.js in Sources */ = {isa = PBXBuildFile; fileRef = 11ED1F31188505AC006860F5 /* player.js */; };
 		ACC9492B1777201800F4736B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ACC949291777201800F4736B /* InfoPlist.strings */; };
 		ACC9494D1777212700F4736B /* vSpeex.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC9494C1777212700F4736B /* vSpeex.m */; };
 		ACC9494F17772CA700F4736B /* vSpeex.h in Headers */ = {isa = PBXBuildFile; fileRef = ACC9494B1777212700F4736B /* vSpeex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,6 +51,14 @@
 		1178DA43187B9BBB00B2C29A /* types.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = types.js; sourceTree = "<group>"; };
 		1178DA44187B9BBB00B2C29A /* util.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = util.js; sourceTree = "<group>"; };
 		1178DA45187B9BD600B2C29A /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		11ED1F21188504D4006860F5 /* aurora.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = aurora.js; sourceTree = "<group>"; };
+		11ED1F22188504D4006860F5 /* bitstring.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = bitstring.min.js; sourceTree = "<group>"; };
+		11ED1F23188504D4006860F5 /* mediacapture.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = mediacapture.js; sourceTree = "<group>"; };
+		11ED1F24188504D4006860F5 /* pcmdata.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = pcmdata.min.js; sourceTree = "<group>"; };
+		11ED1F25188504D4006860F5 /* swfobject.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = swfobject.js; sourceTree = "<group>"; };
+		11ED1F26188504D4006860F5 /* usertiming.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = usertiming.js; sourceTree = "<group>"; };
+		11ED1F27188504D4006860F5 /* xaudio.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = xaudio.js; sourceTree = "<group>"; };
+		11ED1F31188505AC006860F5 /* player.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = player.js; sourceTree = "<group>"; };
 		ACC9491117771FE200F4736B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ACC949231777201800F4736B /* vSpeex.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = vSpeex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACC949241777201800F4736B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -95,8 +111,10 @@
 		1178DA39187B9BBB00B2C29A /* js */ = {
 			isa = PBXGroup;
 			children = (
+				11ED1F20188504D4006860F5 /* lib */,
 				1178DA3A187B9BBB00B2C29A /* speex */,
 				1178DA45187B9BD600B2C29A /* index.html */,
+				11ED1F31188505AC006860F5 /* player.js */,
 			);
 			name = js;
 			path = ../js;
@@ -117,6 +135,20 @@
 				1178DA44187B9BBB00B2C29A /* util.js */,
 			);
 			path = speex;
+			sourceTree = "<group>";
+		};
+		11ED1F20188504D4006860F5 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				11ED1F21188504D4006860F5 /* aurora.js */,
+				11ED1F22188504D4006860F5 /* bitstring.min.js */,
+				11ED1F23188504D4006860F5 /* mediacapture.js */,
+				11ED1F24188504D4006860F5 /* pcmdata.min.js */,
+				11ED1F25188504D4006860F5 /* swfobject.js */,
+				11ED1F26188504D4006860F5 /* usertiming.js */,
+				11ED1F27188504D4006860F5 /* xaudio.js */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		ACC9490517771FE200F4736B = {
@@ -316,11 +348,19 @@
 			files = (
 				ACC9494D1777212700F4736B /* vSpeex.m in Sources */,
 				ACC9495317773C3D00F4736B /* vSpeexOggWriter.m in Sources */,
+				11ED1F2D188504D4006860F5 /* usertiming.js in Sources */,
+				11ED1F2A188504D4006860F5 /* mediacapture.js in Sources */,
+				11ED1F2E188504D4006860F5 /* xaudio.js in Sources */,
+				11ED1F2B188504D4006860F5 /* pcmdata.min.js in Sources */,
 				111732AC1777DDA000589C28 /* vSpeexRecorder.m in Sources */,
 				111732B71777F0C900589C28 /* vSpeexOggReader.m in Sources */,
+				11ED1F29188504D4006860F5 /* bitstring.min.js in Sources */,
 				111732C61777FB0500589C28 /* vSpeexPlayer.m in Sources */,
 				ACDBAFAB177E69BD0046331B /* vSpeexStreamWriter.m in Sources */,
+				11ED1F28188504D4006860F5 /* aurora.js in Sources */,
+				11ED1F2C188504D4006860F5 /* swfobject.js in Sources */,
 				ACDBAFAF177E6B800046331B /* vSpeexStreamReader.m in Sources */,
+				11ED1F32188505AC006860F5 /* player.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

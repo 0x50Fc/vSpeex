@@ -19,6 +19,7 @@
     vSpeex * _speex;
     char * _ebuf;
     char * _dbuf;
+    NSInteger _bitSize;
 }
 
 @end
@@ -53,8 +54,14 @@
         }
         
         _speex = [[vSpeex alloc] initWithMode:header->mode];
+        
         [_speex setSamplingRate:header->rate];
         
+        if(header->reserved1){
+            [_speex setQuality:header->reserved1];
+        }
+        
+        _bitSize = header->frames_per_packet;
         
         speex_header_free(header);
         
@@ -90,11 +97,7 @@
         return NULL;
     }
     
-    unsigned short l = 0;
-    
-    if(fread(&l, 1, sizeof(l), _file) != sizeof(l)){
-        return NULL;
-    }
+
     
     if(_ebuf == NULL){
         _ebuf = malloc(_speex.frameBytes);
@@ -106,15 +109,34 @@
     
     memset(_ebuf, 0, _speex.frameBytes);
     
-    l = ntohs(l);
-    
-    if(l >0){
+    if(_bitSize == 0){
         
-        if(l != fread(_dbuf, 1, l, _file)){
+        unsigned short l = 0;
+        
+        if(fread(&l, 1, sizeof(l), _file) != sizeof(l)){
             return NULL;
         }
         
-        [_speex decodeFrame:_dbuf length:l frameBytes:_ebuf];
+        l = ntohs(l);
+        
+        if(l >0){
+            
+            if(l != fread(_dbuf, 1, l, _file)){
+                return NULL;
+            }
+            
+            [_speex decodeFrame:_dbuf length:l frameBytes:_ebuf];
+        }
+        
+    }
+    else{
+        
+        if(_bitSize != fread(_dbuf, 1, _bitSize, _file)){
+            return NULL;
+        }
+        
+        [_speex decodeFrame:_dbuf length:_bitSize frameBytes:_ebuf];
+        
     }
     
     return _ebuf;
