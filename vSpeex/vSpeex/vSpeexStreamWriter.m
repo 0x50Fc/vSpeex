@@ -80,6 +80,8 @@
         
         fwrite(data, 1, bytes, _file);
         
+        speex_header_free(data);
+        
     }
     return self;
 }
