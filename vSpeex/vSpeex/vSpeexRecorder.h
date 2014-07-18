@@ -35,6 +35,6 @@
 
 -(void) vSpeexRecorderDidStarted:(vSpeexRecorder *) recorder;
 
--(void) vSpeexRecorderDidStoped:(vSpeexRecorder *)recorder;
+-(void) vSpeexRecorderDidStoped:(vSpeexRecorder *) recorder;
 
 @end
